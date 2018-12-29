@@ -1,0 +1,23 @@
+       ______3______
+       /              \
+    ___5__          ___1__
+   /      \        /      \
+   6      _2       0       8
+         /  \
+         7   4
+二叉树的公共父节点
+不是之前的那个搜索树找父节点了，所以难度有点增加
+递归依然可以做，要做的就是判断当前节点的是否等于p或q,等于的话我们就返回当前节点
+p,q可能在左右子树里面，也可能在一个左子树或右子树里面 
+所以返回的时候要进行判断 
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+       if (!root || p == root || q == root) return root;//先判断根，等于p或q的节点就立刻返回当前节点， 
+       TreeNode *left = lowestCommonAncestor(root->left, p, q);//往左边找两个节点 
+       TreeNode *right = lowestCommonAncestor(root->right, p , q);//往右边找两个节点 
+       if (left && right) return root;//如果p,q 可以在根的左右子树里面都找到，就返回根 
+       return left ? left : right;//如果p,q在左子树或右子树里面找到了， 那就返回不为空的节点
+	   //因为是找最靠近上面的，所以找到就立刻返回，一定是为父亲，因为最靠近顶根节点 
+    }
+};
